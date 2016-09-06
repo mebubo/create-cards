@@ -10,19 +10,40 @@ const Word = ({word, onWordClick}) => {
   return <span className="word" onClick={onClick}>{word}</span>;
 }
 
-const Phrase = ({content, onWordClick}) => {
-  const words = content.split(/[\ \n]+/);
-  return (
-    <p>
-      {words.map((w, i) => <Word key={i} word={w} onWordClick={onWordClick}/>)}
-    </p>);
+const CardEditor = ({word, phrase}) => {
+  return <div>
+    <label>Word: <input type="text" value={word}/></label> <br/>
+    <label>Context: <textarea rows="10">{phrase}</textarea></label> <br/>
+    <label>Translation: <textarea rows="10"></textarea></label>
+  </div>;
 }
+
+const Phrase = React.createClass({
+  getInitialState() {
+    return {editingWord: ''}
+  },
+  onClick(w)  {
+    this.props.onWordClick(w);
+    this.setState({editingWord: w});
+  },
+
+  render() {
+    const words = this.props.phrase.split(/[\ \n]+/);
+    return (
+      <div>
+        <p>
+          {words.map((w, i) => <Word key={i} word={w} onWordClick={this.onClick}/>)}
+        </p>
+        {this.state.editingWord ? <CardEditor word={this.state.editingWord} phrase={this.props.phrase} /> : null }
+      </div>);
+  }
+})
 
 const Text = ({text, onWordClick}) => {
   const phrases = text.split(/\n{2,}/);
   return (
     <div className="text">
-      {phrases.map((s, i) => <Phrase content={s} key={i} onWordClick={onWordClick}/>)}
+      {phrases.map((s, i) => <Phrase phrase={s} key={i} onWordClick={onWordClick}/>)}
     </div>);
 }
 

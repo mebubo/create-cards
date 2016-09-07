@@ -6,22 +6,31 @@ html, body {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    width: 100%;
+    height: 100%;
 }
-.app {
+#app, .app {
+    width: 100%;
+    height: 100%;
 }
 .text {
     width: 50%;
+    height: 100%;
+    overflow-y: auto;
 }
 .dictionary {
     width: 50%;
-    position: fixed;
+    height: 100%;
+    position: absolute;
     right: 0;
     top: 0;
-    height: 100%;
+    overflow-y: auto;
 }
 .dictionary iframe {
     width: 100%;
     height: 100%;
+    display: block;
+    border: none;
 }
 .word {
     padding: 3px;
